@@ -1,13 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import * as cocoSsd from "@tensorflow-models/coco-ssd";
+// import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import "@tensorflow/tfjs";
+import {loadGraphModel} from '@tensorflow/tfjs-converter';
 import "./styles.css";
 
 class App extends React.Component {
   videoRef = React.createRef();
   canvasRef = React.createRef();
+  MODEL_URL = "http://localhost:8080/web_model/model.json"
 
   componentDidMount() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -30,7 +32,7 @@ class App extends React.Component {
             };
           });
         });
-      const modelPromise = cocoSsd.load();
+      const modelPromise = loadGraphModel(this.MODEL_URL);
       Promise.all([modelPromise, webCamPromise])
         .then(values => {
           this.detectFrame(this.videoRef.current, values[0]);
