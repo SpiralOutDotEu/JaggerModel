@@ -2,3 +2,5 @@ node_modules/
 .idea/
 .vscode/
 /JaggerModel.iml
+*.log
+react-client/npm-debug.log
